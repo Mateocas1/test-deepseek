@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     try {
       const { ConvexHttpClient } = await import("convex/browser");
       const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-      await convex.mutation(api.users.upsertFromClerk, {
+      await convex.mutation(api.users.upsertFromClerk as any, {
         clerkId: data.id,
         email: email ?? "",
         name:
