@@ -93,10 +93,13 @@ export const create = mutation({
     const existing = await ctx.db
       .query("appointments")
       .withIndex("by_date_time", (q) =>
-        q.eq("date", args.date).eq("time", args.time)
+        q.eq("date", args.date)
       )
       .filter((q) =>
-        q.neq(q.field("status"), v.literal("cancelled"))
+        q.and(
+          q.eq(q.field("time"), args.time),
+          q.neq(q.field("status"), v.literal("cancelled"))
+        )
       )
       .first();
 
