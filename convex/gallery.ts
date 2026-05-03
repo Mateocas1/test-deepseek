@@ -3,17 +3,13 @@ import { mutation, query } from "./_generated/server";
 
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db
-      .query("gallery")
-      .filter((q) => q.eq(q.field("active"), true))
-      .order("asc")
-      .collect();
+    return await ctx.db.query("gallery").collect();
   },
 });
 
 export const listAll = query({
   handler: async (ctx) => {
-    return await ctx.db.query("gallery").order("asc").collect();
+    return await ctx.db.query("gallery").collect();
   },
 });
 
@@ -26,7 +22,6 @@ export const add = mutation({
   handler: async (ctx, { storageId, caption, order }) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) throw new Error("No autenticado");
-
     return await ctx.db.insert("gallery", {
       storageId,
       caption,
