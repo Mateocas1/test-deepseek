@@ -5,15 +5,15 @@ export const list = query({
   handler: async (ctx) => {
     return await ctx.db
       .query("gallery")
-      .withIndex("by_order")
       .filter((q) => q.eq(q.field("active"), true))
+      .order("asc")
       .collect();
   },
 });
 
 export const listAll = query({
   handler: async (ctx) => {
-    return await ctx.db.query("gallery").withIndex("by_order").collect();
+    return await ctx.db.query("gallery").order("asc").collect();
   },
 });
 
